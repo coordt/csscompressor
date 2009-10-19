@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 """
 CSS Compressor
 
@@ -105,3 +106,18 @@ def compress_css(css):
     new_css = restore_boxmodelhack(new_css)
     
     return new_css.strip()
+
+def compress_cssfile(cssfilepath):
+    csscontent = open(cssfilepath).read()
+    return compress_css(csscontent)
+
+
+if __name__ == "__main__":
+    import sys
+    
+    if len(sys.argv) > 1:
+        try:
+            print compress_cssfile(sys.argv[1])
+        except Exception, e:
+            print e
+            sys.exit()
