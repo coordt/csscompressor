@@ -74,10 +74,12 @@ def shorten_colors(css):
     # Shorten colors from rgb(51,102,153) to #336699
     # This makes it more likely that it'll get further compressed in the next step.
     pattern = re.compile(r"rgb\s*\(\s*(\d+),\s*(\d+),\s*(\d+)\s*\)")
-    int2hex = lambda x: ("0%s" % hex(x)[2:])[-2:]
-    convert_nums = lambda x: '#%s%s%s' % (int2hex(int(x.group(1))), int2hex(int(x.group(2))), int2hex(int(x.group(3))))
+    int2hex = lambda x: f"0{hex(x)[2:]}"[-2:]
+    convert_nums = (
+        lambda x: f'#{int2hex(int(x.group(1)))}{int2hex(int(x.group(2)))}{int2hex(int(x.group(3)))}'
+    )
     new_css = pattern.sub(convert_nums, css)
-    
+
     # Shorten colors from #AABBCC to #ABC. Note that we want to make sure
     # the color is not preceded by either ", " or =. Indeed, the property
     #     filter: chroma(color="#FFFFFF");
